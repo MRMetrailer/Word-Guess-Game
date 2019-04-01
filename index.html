@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Word Guess Game</title>
+  <link rel="stylesheet" href="assets/css/style.css">
+
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+
+<body>
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3">
+        <p></p>
+      </div>
+      <div class="col-lg-6">
+        <div class="text-center">
+          <h1>Guess the Colorado Ski Resort</h1>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <p></p>
+      </div>
+    </div>
+    <br><br>
+    <div class="row">
+      <div class="col-lg-6 text-center">
+        <img id="resortImg" src="#" alt="" width="400px" height="auto">
+      </div>
+      <div class="col-lg-6 text-center">
+        <p>Press any key to begin</p>
+        <div>Wins:</div>
+        <div id="wins"></div>
+        <br>
+        <div>Word:</div>
+        <div id="word-display"></div>
+        <br>
+        <div>Guesses left:</div>
+        <div id="guesses-left"></div>
+        <br>
+        <div>Already guessed:</div>
+        <div id="already-guessed"></div>
+      </div>
+    </div>
+
+  </div>
+  
+  
+
+  <script src="assets/javascript/game.js"></script>
+</body>
+
+</html>
