@@ -5,7 +5,7 @@ var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.
 
 // variables
 var numWins = 0;
-var attempts = 12;
+var attempts = 9;
 
 // arrays
 var guesses = [];
@@ -15,7 +15,7 @@ var computerWord = [];
 // reset function
 function resetGame() {
 
-    attempts = 12;
+    attempts = 9;
     attemptsText.textContent = attempts;
 
     guesses = [];
