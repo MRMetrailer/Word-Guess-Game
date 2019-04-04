@@ -7,49 +7,70 @@
   <link rel="stylesheet" href="assets/css/style.css">
 
   <!-- Bootstrap CSS -->
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 <body>
   <div class="container">
     <div class="row">
-      <div class="col-lg-3">
-        <p></p>
-      </div>
-      <div class="col-lg-6">
+      <div class="col-lg-12">
         <div class="text-center">
           <h1>Guess the Colorado Ski Resort</h1>
         </div>
       </div>
-      <div class="col-lg-3">
-        <p></p>
-      </div>
     </div>
-    <br><br>
-    <div class="row">
-      <div class="col-lg-6 text-center">
-        <img id="resortImg" src="#" alt="" width="400px" height="auto">
-      </div>
-      <div class="col-lg-6 text-center">
-        <p>Press any key to begin</p>
-        <div>Wins:</div>
-        <div id="wins"></div>
-        <br>
-        <div>Word:</div>
-        <div id="word-display"></div>
-        <br>
-        <div>Guesses left:</div>
-        <div id="guesses-left"></div>
-        <br>
-        <div>Already guessed:</div>
-        <div id="already-guessed"></div>
-      </div>
-    </div>
-
   </div>
-  
-  
+  <br><br>
+  <div class="row">
+    <div class="col-lg-6 text-center">
+      <img id="resortImg" src="assets/images/skier.jpg" alt="resort image" width="400">
+    </div>
+    <div class="col-lg-6 text-center">
+      <p>Press any key to begin</p>
+      <dl>
+        <dt>Wins:</dt>
+        <dd id="wins">0</dd>
+        <dt>Losses:</dt>
+        <dd id="losses">0</dd>
+        <dt>Word:</dt>
+        <dd id="word-display"></dd>
+        <dt>Guesses Left:</dt>
+        <dd id="guesses-left"></dd>
+        <dt>Already Guessed:</dt>
+        <dd id="already-guessed"></dd>
+      </dl>
+    </div>
+  </div>
 
+  <div id="winModal" class="modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">CONGRATULATIONS</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>You won!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+    crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+    crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+    crossorigin="anonymous"></script>
   <script src="assets/javascript/game.js"></script>
 </body>
 

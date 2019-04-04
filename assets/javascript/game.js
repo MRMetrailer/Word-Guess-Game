@@ -1,10 +1,11 @@
 // the computer will pick a random word 
 var userOptions = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"];
 var computerOptions = ["arapahoebasin", "aspen", "breckenridge", "beavercreek", "copper", "crestedbutte", "keystone", "loveland", "steamboat", "telluride", "vail", "winterpark"];
-var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+var computerChoice;
 
 // variables
 var numWins = 0;
+var numLoss = 0;
 var attempts = 9;
 
 // arrays
@@ -14,29 +15,17 @@ var computerWord = [];
 
 // reset function
 function resetGame() {
-
     attempts = 9;
-    attemptsText.textContent = attempts;
-
-    guesses = [];
-    guessesText.textContent = guesses;
-
-    computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
-    console.log("Computer choice: " + computerChoice);
-
     hiddenWord = [];
     computerWord = [];
+    guesses = [];
+
+    computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
 
     for (var i = 0; i < computerChoice.length; i++) {
         hiddenWord.push("-");
-    }
-    wordDisplay.textContent = hiddenWord.join("");
-    
-    for (var i = 0; i < computerChoice.length; i++) {
         computerWord.push(computerChoice[i]);
     }
-
-    return attempts, guesses, computerChoice, hiddenWord, computerWord;
 }
 
 // function to check if hiddenWord equals computerWord
@@ -54,87 +43,104 @@ function checkArrays(arr1, arr2) {
 
 // function to display photo after a win
 function displayPhoto(resort) {
-    if (resort === "arapahoebasin") {
-        resortImage.src = "assets/images/abasin.jpg"
-    } else if (resort === "aspen") {
-        resortImage.src = "assets/images/aspen.jpg"
-    } else if (resort === "breckenridge") {
-        resortImage.src = "assets/images/breck.jpg"
-    } else if (resort === "beavercreek") {
-        resortImage.src = "assets/images/beaver.jpg"
-    } else if (resort === "copper") {
-        resortImage.src = "assets/images/copper.jpg"
-    } else if (resort === "crestedbutte") {
-        resortImage.src = "assets/images/crested.jpg"
-    } else if (resort === "keystone") {
-        resortImage.src = "assets/images/keystone.jpg"
-    } else if (resort === "loveland") {
-        resortImage.src = "assets/images/loveland.jpg"
-    } else if (resort === "steamboat") {
-        resortImage.src = "assets/images/steamboat.jpg"
-    } else if (resort === "telluride") {
-        resortImage.src = "assets/images/telluride.jpg"
-    } else if (resort === "vail") {
-        resortImage.src = "assets/images/vail.jpg"
-    } else if (resort === "winterpark") {
-        resortImage.src = "assets/images/winter.jpg"
-    }
+     resortImage.src = 'assets/images/' + resort + '.jpg';
 }
 
 // assigning variables to the HTML elements that change
 var winsText = document.getElementById("wins");
+var lossText = document.getElementById("losses");
 var wordDisplay = document.getElementById("word-display");
 var attemptsText = document.getElementById("guesses-left");
 var guessesText = document.getElementById("already-guessed");
 var resortImage = document.getElementById("resortImg");
 
-for (var i = 0; i < computerChoice.length; i++) {
-    hiddenWord[i] = "-";
-}
-wordDisplay.textContent = hiddenWord.join("");
+// beginning the game display start
+function init() {
+    resetGame();
+    render();
 
-for (var i = 0; i < computerChoice.length; i++) {
-    computerWord[i] = computerChoice[i];
-}
-
-document.onkeyup = function(event) {
-    var letter = event.key.toLowerCase();
-
-    // checking that the input is a letter and has not been guessed
-    if ((userOptions.indexOf(letter) > -1) && (guesses.indexOf(letter) < 0)) {
+    // main function triggers on keypress converts to lowercase
+    document.onkeyup = function(event) {
+        var letter = event.key.toLowerCase();
+    
+        // checking that the input is a not letter or has been guessed - do nothing
+        if (!isValidGuess(letter)) {
+            return;
+        }
+    
+        // updating the guessed letters
+        guesses.push(letter);
+    
         // checking if the input is in the computer word
-        if (computerWord.indexOf(letter) > -1) {
-            // replacing the "-" in the hidden word with the letter
-            for (var i = 0; i < computerWord.length; i++) {
-                if (letter === computerWord[i]) {
-                    hiddenWord[i] = letter;
-                    wordDisplay.textContent = hiddenWord.join("");
-                }
-            }
-
-            // updating the guessed letters
-            guesses += letter;
-            guessesText.textContent = guesses;
+        if (checkGuess(letter)) {
+            updateHiddenWord(letter)
         } else {
-            // lose an attempt for an incorrect guess
             attempts -= 1;
-            attemptsText.textContent = attempts;
-
-            // updating the guessed letters
-            guesses += letter;
-            guessesText.textContent = guesses;
         }
-
-        // conditions for a win
-        if (checkArrays(hiddenWord, computerWord)) {
-            numWins += 1;
-            winsText.textContent = numWins;
-            displayPhoto(computerChoice);
-            resetGame();
+    
+        // checking for a win or a loss
+        if (checkWin()) {
+            showWin();
+        } else if (checkLose()) {
+            showLose();
         }
-        // conditions for a loss
-        if (attempts === 0) {
-            resetGame();
+        // showing new data on screen
+        render();
+    }
+}
+
+// is letter guessed a valid letter and has it been guessed already
+function isValidGuess(letter) {
+    return userOptions.indexOf(letter) > -1 && guesses.indexOf(letter) === -1;
+}
+
+// is letter guessed in computer word
+function checkGuess(letter) {
+    return computerWord.indexOf(letter) > -1;
+}
+
+// replacing the "-" in the hidden word with the letter
+function updateHiddenWord(letter) {
+    for (var i = 0; i < computerWord.length; i++) {
+        if (letter === computerWord[i]) {
+            hiddenWord[i] = letter;
         }
     }
+}
+
+// conditions for a win
+function checkWin() {
+ return checkArrays(hiddenWord, computerWord);
+}
+
+function showWin () {
+    numWins++;
+    displayPhoto(computerChoice);
+    resetGame();
+    $('#winModal').modal({});
+}
+
+// conditions for a loss
+function checkLose() {
+    return attempts === 0;
+}
+
+function showLose() {
+    numLoss++;
+    displayPhoto('hangman');
+    resetGame();
+}
+
+// showing new data on the screen
+function render() {
+    winsText.textContent = numWins;
+    lossText.textContent = numLoss;
+    wordDisplay.textContent = hiddenWord.join("");
+    attemptsText.textContent = attempts;
+    guessesText.textContent = guesses;
+}
+
+// wait for page to load and start game
+window.onload = function () {
+    init();
 }
